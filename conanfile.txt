@@ -1,0 +1,7 @@
+[requires]
+boost_process/1.66.0@bincrafters/stable
+
+premake_generator/master@enhex/stable
+
+[generators]
+premake
