@@ -1,11 +1,13 @@
 set source="%~dp0\"
 
-cd ..
-mkdir build
-cd build
+set build_dir=build
 
-conan install %source% --build=missing
-REM conan install %source% --build=missing -s build_type=Debug
+cd ..
+mkdir %build_dir%
+cd %build_dir%
+
+conan install %source% --build=outdated
+REM conan install %source% --build=outdated -s build_type=Debug
 
 cd %source%
-premake5 vs2017
+premake5 vs2019 --location=../%build_dir%/

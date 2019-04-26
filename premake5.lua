@@ -1,26 +1,26 @@
-location_dir = "../build/"
+newoption {
+	trigger     = "location",
+	value       = "./",
+	description = "Where to generate the project.",
+}
 
-include(location_dir .. "conanpremake.lua")
+if not _OPTIONS["location"] then
+	_OPTIONS["location"] = "./"
+end
+
+include(_OPTIONS["location"] .. "conanbuildinfo.premake.lua")
 
 workspace("Build Tool Abstraction")
-	location(location_dir)
-	configurations { conan_build_type }
-	architecture(conan_arch)
+	location(_OPTIONS["location"])
+	conan_basic_setup()
 
 	project("build")
 		kind "ConsoleApp"
 		language "C++"
 		cppdialect "C++17"
-		targetdir = location_dir .. "bin/%{cfg.buildcfg}"
+		targetdir = _OPTIONS["location"] .. "bin/%{cfg.buildcfg}"
 
-		includedirs{
-			conan_includedirs
-		}
-
-		libdirs{conan_libdirs}
-		links{conan_libs}
-		defines{conan_cppdefines, "_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS"}
-		bindirs{conan_bindirs}
+		defines{"_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS"}
 
 		files{
 			"src/*",

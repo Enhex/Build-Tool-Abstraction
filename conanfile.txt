@@ -1,8 +1,6 @@
 [requires]
-boost_process/1.66.0@bincrafters/stable
-boost_filesystem/1.66.0@bincrafters/stable
-
-premake_generator/master@enhex/stable
+boost_process/1.69.0@bincrafters/stable
+boost_filesystem/1.69.0@bincrafters/stable
 
 [generators]
 premake
