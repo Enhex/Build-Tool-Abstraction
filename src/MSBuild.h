@@ -24,7 +24,7 @@ bool MSBuild(boost::filesystem::path const& file)
 
 
 	// find MSBuild
-	auto command = vswhere_path + " -latest -products * -requires Microsoft.Component.MSBuild -property installationPath";
+	auto command = vswhere_path + R"( -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe)";
 
 	// run command and return return single line
 	auto run_command = [&command]()
@@ -40,20 +40,19 @@ bool MSBuild(boost::filesystem::path const& file)
 
 	const auto msbuild_path = run_command();
 
-	// find VS version
-	command.clear();
-	command += vswhere_path + " -latest -products * -requires Microsoft.Component.MSBuild -property catalog_productDisplayVersion";
-
-	auto const vs_version = run_command();
-	auto const vs_version_major = vs_version.substr(0, vs_version.find_first_of('.'));
-
 	// call MSBuild
 	command.clear();
 	command += '\"';
 	command += msbuild_path;
-	command += R"(\MSBuild\)" + vs_version_major + R"(.0\Bin\MSBuild.exe" ")" + file.string() + '\"';
+	command += "\" \"" + file.string() + '\"';
 
-	bp::system(command, bp::std_out > stdout);
+	try {
+		bp::system(command, bp::std_out > stdout);
+	}
+	catch (std::exception & e) {
+		std::cerr << e.what() << std::endl;
+		return false;
+	}
 
 	return true;
 }
