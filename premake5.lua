@@ -33,3 +33,4 @@ workspace("Build Tool Abstraction")
 		filter "configurations:Release"
 			defines { "NDEBUG" }
 			optimize "On"
+			flags {"LinkTimeOptimization"}
