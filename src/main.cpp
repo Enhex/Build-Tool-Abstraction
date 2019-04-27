@@ -1,8 +1,6 @@
 #include "MSBuild.h"
 #include "Make.h"
 
-namespace fs = boost::filesystem;
-
 // return true if successfully found the build tool
 bool find_and_use_tool(fs::path const& path)
 {

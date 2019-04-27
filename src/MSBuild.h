@@ -1,13 +1,14 @@
 #pragma once
 
 #include <boost/process.hpp>
+#include <filesystem>
 #include <iostream>
 #include <string>
-//#include <filesystem> //TODO still not supported well enough
-#include <boost/filesystem.hpp>
+
+namespace fs = std::filesystem;
 
 // can use either project or solution file
-bool MSBuild(boost::filesystem::path const& file)
+bool MSBuild(fs::path const& file)
 {
 	namespace bp = boost::process;
 
