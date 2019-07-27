@@ -1,6 +1,5 @@
 [requires]
-boost_process/1.69.0@bincrafters/stable
-boost_filesystem/1.69.0@bincrafters/stable
+boost/1.70.0@conan/stable
 
 [generators]
 premake
