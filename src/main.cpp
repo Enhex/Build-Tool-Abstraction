@@ -7,6 +7,7 @@ bool find_and_use_tool(fs::path const& path)
 	auto check_file = [](fs::path const& filepath){
 		// check for Visual Studio solution file
 		if (filepath.extension() == ".sln") {
+			vs_upgrade(filepath);
 			return MSBuild(filepath);
 		}
 		// check for Makefile

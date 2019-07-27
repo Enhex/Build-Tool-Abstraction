@@ -57,3 +57,54 @@ bool MSBuild(fs::path const& file)
 
 	return true;
 }
+
+bool vs_upgrade(fs::path const& file)
+{
+
+	namespace bp = boost::process;
+
+	// find vswhere
+	std::string program_files;
+	if (const char* env_p = std::getenv("ProgramFiles(x86)")) {
+		program_files = env_p;
+	}
+	else {
+		return false;
+	}
+
+	auto const vswhere_path = '\"' + program_files + R"(\Microsoft Visual Studio\Installer\vswhere.exe")";
+
+
+	// find devenv
+	auto command = vswhere_path + R"( -legacy -latest -property installationPath)";
+
+	// run command and return return single line
+	auto run_command = [&command]()
+	{
+		std::string output;
+		bp::ipstream is;
+		bp::system(command, bp::std_out > is);
+		std::getline(is, output);
+		if (output.back() == '\r')
+			output.pop_back();
+		return output;
+	};
+
+	const auto devenv_path = run_command() + R"(\Common7\IDE\devenv.exe)";
+
+	// call devenv
+	command.clear();
+	command += '\"';
+	command += devenv_path;
+	command += "\" \"" + file.string() + "\" /Upgrade";
+
+	try {
+		bp::system(command, bp::std_out > stdout);
+	}
+	catch (std::exception & e) {
+		std::cerr << e.what() << std::endl;
+		return false;
+	}
+
+	return true;
+}
