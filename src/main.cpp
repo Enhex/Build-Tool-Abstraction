@@ -4,17 +4,29 @@
 // return true if successfully found the build tool
 bool find_and_use_tool(fs::path const& path)
 {
-	for (auto const& entry : fs::directory_iterator(path))
-	{
+	auto check_file = [](fs::path const& filepath){
 		// check for Visual Studio solution file
-		if (entry.path().extension() == ".sln") {
-			return MSBuild(entry.path());
+		if (filepath.extension() == ".sln") {
+			return MSBuild(filepath);
 		}
 		// check for Makefile
-		else if (entry.path().filename() == "Makefile") {
+		else if (filepath.filename() == "Makefile") {
 			Make();
 			return true;
 		}
+	};
+
+	if (fs::is_directory(path))
+	{
+		for (auto const& entry : fs::directory_iterator(path))
+		{
+			if(check_file(entry.path()))
+				return true;
+		}
+	}
+	else {
+		if(check_file(path))
+			return true;
 	}
 
 	return false;
