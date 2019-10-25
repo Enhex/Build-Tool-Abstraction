@@ -33,4 +33,7 @@ workspace("Build Tool Abstraction")
 		filter "configurations:Release"
 			defines { "NDEBUG" }
 			optimize "On"
+		
+		-- LTO causes linker to fail with pthread on linux
+		filter { "configurations:Release", "toolset:msc" }
 			flags {"LinkTimeOptimization"}
