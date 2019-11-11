@@ -37,3 +37,6 @@ workspace("Build Tool Abstraction")
 		-- LTO causes linker to fail with pthread on linux
 		filter { "configurations:Release", "toolset:msc" }
 			flags {"LinkTimeOptimization"}
+
+		filter "toolset:gcc"
+			links{"stdc++fs"}
