@@ -32,7 +32,7 @@ def build(source, build_type, symlinks = [], symlink_pairs = []):
     if platform == 'win32':
         generator = 'vs2019'
     else:
-        generator = 'gmake2'
+        generator = 'codelite'
     
     # premake
     os.chdir(source)
