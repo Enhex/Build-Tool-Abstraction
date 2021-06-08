@@ -6,7 +6,7 @@
 void Make()
 {
 	namespace bp = boost::process;
-	
+
 	std::string command = "make -j";
 	command += std::to_string(std::thread::hardware_concurrency());
 

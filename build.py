@@ -5,7 +5,7 @@ def create_symlink(src, dst):
     # create all parent directories of the symlink one
     parent_dir = os.path.dirname(dst)
     os.makedirs(parent_dir, exist_ok=True)
-    
+
     try:
         os.symlink(src, dst)
     except:
@@ -33,7 +33,7 @@ def build(source, build_type, symlinks = [], symlink_pairs = []):
         generator = 'vs2019'
     else:
         generator = 'codelite'
-    
+
     # premake
     os.chdir(source)
     os.system('premake5 ' + generator + ' --location="' + build_dir + '"')
