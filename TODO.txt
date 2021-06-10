@@ -1,0 +1,12 @@
+build tool abstraction add codelite support
+codelite-make -w ./L3_core.workspace -c Debug -e
+
+
+need for find available configs
+*.workspace contains them
+
+<WorkspaceConfiguration Name="Debug" Selected="yes">
+    <Project Name="L3_core" ConfigName="Debug"/>
+</WorkspaceConfiguration>
+
+need to add option to select config name

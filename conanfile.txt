@@ -1,5 +1,10 @@
 [requires]
 boost/1.76.0
 
+[options]
+# needed to cross compile boost
+boost:without_stacktrace=True
+boost:without_fiber=True
+
 [generators]
 premake

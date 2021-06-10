@@ -8,6 +8,11 @@ if not _OPTIONS["location"] then
 	_OPTIONS["location"] = "./"
 end
 
+newoption {
+	trigger     = "mingw",
+	description = "MinGW is being used to cross compile.",
+}
+
 include(_OPTIONS["location"] .. "conanbuildinfo.premake.lua")
 
 workspace("Build Tool Abstraction")
@@ -25,6 +30,12 @@ workspace("Build Tool Abstraction")
 		files{
 			"src/*",
 		}
+
+		-- needed to cross compile
+		if _OPTIONS["mingw"] then
+			libdirs {"/usr/x86_64-w64-mingw32/lib"}
+			links{"ws2_32"}
+		end
 
 		filter "configurations:Debug"
 			defines { "DEBUG" }
