@@ -1,5 +1,14 @@
 import os
+import argparse
 from sys import platform
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--release", help="Generate release build (debug by default).", action="store_true")
+args = parser.parse_args()
+
+build_type = 'Release' if args.release else 'Debug'
+
+source = os.path.dirname(os.path.realpath(__file__))
 
 def create_symlink(src, dst):
     # create all parent directories of the symlink one
@@ -32,8 +41,11 @@ def build(source, build_type, symlinks = [], symlink_pairs = []):
     if platform == 'win32':
         generator = 'vs2019'
     else:
-        generator = 'codelite'
+        generator = 'gmake2'
 
     # premake
     os.chdir(source)
     os.system('premake5 ' + generator + ' --location="' + build_dir + '"')
+
+
+build(source, build_type)
