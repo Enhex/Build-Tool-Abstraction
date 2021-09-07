@@ -19,4 +19,4 @@ os.environ['CXX'] = 'x86_64-w64-mingw32-g++'
 os.environ['STRIP'] = 'x86_64-w64-mingw32-strip'
 os.environ['RC'] = 'x86_64-w64-mingw32-windres'
 
-os.system('make -j$(nproc)')
+os.system('make -r -j$(nproc)')
