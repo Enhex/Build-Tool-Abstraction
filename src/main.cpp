@@ -1,5 +1,6 @@
 #include "MSBuild.h"
 #include "Make.h"
+#include "MakePkg.h"
 
 // return true if successfully found the build tool
 bool find_and_use_tool(fs::path const& path)
@@ -15,6 +16,12 @@ bool find_and_use_tool(fs::path const& path)
 		else if (filepath.filename() == "Makefile") {
 			fs::current_path(filepath.parent_path());
 			Make();
+			return true;
+		}
+		// check for PKGBUILD
+		else if (filepath.filename() == "PKGBUILD") {
+			fs::current_path(filepath.parent_path());
+			MakePkg();
 			return true;
 		}
 
