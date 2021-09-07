@@ -38,20 +38,21 @@ def build(source, build_type, symlinks = [], symlink_pairs = []):
         create_symlink(source + '/' + src_path, './' + dst_path)
 
     # conan
-
     conan_profile = ' -pr=linux_to_win64' if args.linux_to_win64 else ''
     os.system('conan install "' + source + '/" --build=outdated -s arch=x86_64 -s build_type=' + build_type + conan_profile)
 
     # choose generator based on OS
-    if platform == 'win32':
-        generator = 'vs2019'
-    else:
-        generator = 'gmake2'
-
-    # premake
-    cross_compile_arg = ' --mingw' if args.linux_to_win64 else ''
     os.chdir(source)
-    os.system('premake5 ' + generator + ' --location="' + build_dir + '"' + cross_compile_arg)
+    cross_compile_arg = ' --mingw' if args.linux_to_win64 else ''
+
+    def premake_generate(generator):
+        os.system('premake5 ' + generator + ' --location="' + build_dir + '"' + cross_compile_arg)
+
+    if platform == 'win32':
+        premake_generate('vs2019')
+    else:
+        premake_generate('gmake2')
+        premake_generate('vscode')
 
 
 build(source, build_type)
