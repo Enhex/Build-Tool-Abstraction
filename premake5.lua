@@ -44,6 +44,8 @@ workspace("Build Tool Abstraction")
 		filter "configurations:Release"
 			defines { "NDEBUG" }
 			optimize "On"
+			buildoptions{"-fdata-sections -ffunction-sections"} -- needed for -gc-sections
+			linkoptions{"-s -Wl,--gc-sections -Wl,--as-needed"}
 
 		-- LTO causes linker to fail with pthread on linux
 		filter { "configurations:Release", "toolset:msc" }
