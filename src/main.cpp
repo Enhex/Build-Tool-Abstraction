@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "MSBuild.h"
 #include "Make.h"
 #include "MakePkg.h"
