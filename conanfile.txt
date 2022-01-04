@@ -1,5 +1,5 @@
 [requires]
-boost/1.77.0
+boost/1.78.0
 
 [options]
 # needed to cross compile boost
