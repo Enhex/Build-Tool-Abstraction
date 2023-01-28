@@ -38,7 +38,7 @@ def build(source, build_type, symlinks = [], symlink_pairs = []):
         create_symlink(source + '/' + src_path, './' + dst_path)
 
     # conan
-    conan_profile = ' -pr=linux_to_win64' if args.linux_to_win64 else ''
+    conan_profile = ' -pr=linux_to_win64 -s:b os_build=Linux' if args.linux_to_win64 else ''
     os.system('conan install "' + source + '/" --build=outdated -s arch=x86_64 -s build_type=' + build_type + conan_profile)
 
     # choose generator based on OS

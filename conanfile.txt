@@ -3,6 +3,8 @@ boost/1.79.0
 
 [options]
 # needed to cross compile boost
+boost:without_locale=True
+boost:without_log=True
 boost:without_stacktrace=True
 boost:without_fiber=True
 
